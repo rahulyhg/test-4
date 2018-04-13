@@ -93,7 +93,9 @@ class RegisterController extends HomeBaseController
             } else {
                 $log = 2;
             }
+            // 取值（当前作用域）正常情况下经过index()后是已经赋值的
             $sessionLoginHttpReferer = session('login_http_referer');
+
             $redirect                = empty($sessionLoginHttpReferer) ? cmf_get_root() . '/' : $sessionLoginHttpReferer;
             switch ($log) {
                 case 0:

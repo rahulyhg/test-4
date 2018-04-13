@@ -57,6 +57,7 @@ class MailerController extends AdminBaseController
             $this->error("不能留空！");
         }
 
+        // 框架开发者在这里偷懒了，邮箱密码储存的是明文，被拖库后有风险。将数组转化为json字符串直接存储的，是一个很好很简单的方法，但密码未处理。
         cmf_set_option('smtp_setting', $post);
 
         $this->success("保存成功！");
@@ -153,6 +154,10 @@ class MailerController extends AdminBaseController
             if (!$validate->check($data)) {
                 $this->error($validate->getError());
             }
+
+            // echo $data['to'];
+            // echo $data['subject'];
+            // echo $data['content'];die;
 
             $result = cmf_send_email($data['to'], $data['subject'], $data['content']);
             if ($result && empty($result['error'])) {

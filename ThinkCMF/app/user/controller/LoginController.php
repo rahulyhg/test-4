@@ -23,6 +23,9 @@ class LoginController extends HomeBaseController
     public function index()
     {
         $redirect = $this->request->post("redirect");
+        // print_r($redirect);die;
+        // 登录首页视图打开前先检测是否有post的"redirect"跳转提交， 如果没有...
+        // print_r($this->request->server());die;
         if (empty($redirect)) {
             $redirect = $this->request->server('HTTP_REFERER');
         } else {

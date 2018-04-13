@@ -85,6 +85,10 @@ class SettingController extends AdminBaseController
                 $this->error($result);
             }
 
+            // 解析：
+            // 'SettingSite' 'site_info' 等表单，作者都是将他们提交给sitePost()方法
+            // sitePost()根据提交的内容处理
+
             $options = $this->request->param('options/a');
             cmf_set_option('site_info', $options);
 

@@ -312,7 +312,7 @@ class UserModel extends Model
     public function bindingMobile($user)
     {
         $userId          = cmf_get_current_user_id();
-        $data ['mobile'] = $user['username'];
+        $data['mobile']  = $user['username'];
         Db::name("user")->where('id', $userId)->update($data);
         $userInfo = Db::name("user")->where('id', $userId)->find();
         cmf_update_current_user($userInfo);
