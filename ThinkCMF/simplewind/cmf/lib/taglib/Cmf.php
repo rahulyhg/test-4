@@ -75,15 +75,14 @@ parse;
 <?php
      if(isset(\$theme_widgets[{$name}]) && \$theme_widgets[{$name}]['display']){
         \$widget=\$theme_widgets[{$name}];
-     
+
  ?>
 {$content}
 <?php
     }
  ?>
-
-
 parse;
+
 
         return $parse;
 

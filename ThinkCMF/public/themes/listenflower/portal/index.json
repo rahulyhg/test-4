@@ -1,5 +1,5 @@
 {
-    "name": "首页",
+    "name": "Home",
     "action": "portal/Index/index",
     "description": "首页模板文件",
     "order": 5.0,
@@ -22,7 +22,7 @@
         },
         "widgets": {
             "features": {
-                "title": "快速了解ThinkCMF",
+                "title": "快速了解ThinkCMF和LF",
                 "display": "1",
                 "vars": {
                     "sub_title": {

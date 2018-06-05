@@ -47,12 +47,12 @@
                 border-radius: 0;
             }
         }
-
     </style>
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <hook name="before_head_end"/>
 </head>
 <body class="body-white">
-<include file="public@nav"/>
+<include file="public@nav2"/>
 
 <ul id="home-slider" class="list-unstyled">
     <php>
@@ -69,7 +69,7 @@
     <noslides id="$top_slide_id">
         <li>
             <div class="caption-wraper">
-                <div class="caption">此幻灯片只是演示,您没有设置任何幻灯片,请到后台模板设置！</div>
+                <div class="caption">这里只是测试内容！</div>
             </div>
             <a href=""><img src="__TMPL__/public/assets/images/demo/1.jpg" alt=""></a>
         </li>
@@ -89,6 +89,7 @@
 </ul>
 
 <div class="container">
+
     <widget name="features">
         <div>
             <h1 class="text-center">{$widget.title}</h1>
@@ -112,7 +113,6 @@
                 </foreach>
             </div>
         </for>
-
     </widget>
 
     <widget name="last_news">
@@ -164,6 +164,7 @@
             </portal:articles>
         </div>
     </widget>
+
     <include file="public@footer"/>
 </div>
 <!-- /container -->
@@ -176,9 +177,9 @@
             useCSS: true,
             captions: false,
             speed: 1000,
-            pause: 3000,
+            pause: 6000,
             auto: true,
-            preload: 'visible'
+            preload: 'visible',
         });
         $("#home-slider").show();
     });
