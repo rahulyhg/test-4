@@ -61,7 +61,7 @@ class MainController extends AdminBaseController
 
         $dashboardWidgetPlugins = [];
 
-        $hookResults = hook('admin_dashboard');
+        $hookResults = hook('admin_dashboard'); //var_dump($hookResults);
 
         if (!empty($hookResults)) {
             foreach ($hookResults as $hookResult) {

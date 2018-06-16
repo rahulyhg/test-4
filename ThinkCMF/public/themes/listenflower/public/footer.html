@@ -3,6 +3,7 @@
 <hr>
 <div id="footer">
     <hook name="footer_start"/>
+    <hook name="reminder_show"/>
     <div class="links">
         <links>
             <a href="{$vo.url|default=''}" target="{$vo.target|default=''}">{$vo.name|default=''}</a>&nbsp;
@@ -23,7 +24,7 @@
         <notempty name="site_info.site_icp">
             <a href="http://www.miitbeian.gov.cn/" target="_blank">{$site_info.site_icp}</a>
             <else/>
-            请在后台设置"网站信息"设置"备案信息"
+            <p class="text-warning">请在后台设置"网站信息"设置"备案信息"</p>
         </notempty>
 
 

@@ -41,7 +41,7 @@ class DemoPlugin extends Plugin
     //实现的footer_start钩子方法
     public function footerStart($param)
     {
-        $config = $this->getConfig();
+        $config = $this->getConfig(); //var_dump($param);die; // 'null' ??
         $this->assign($config);
         echo $this->fetch('widget');
     }

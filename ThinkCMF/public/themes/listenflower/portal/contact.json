@@ -1,4 +1,5 @@
 {
+    
     "name": "联系我们页",
     "action": "portal/Page/index",
     "description": "联系我们页模板文件",
@@ -8,14 +9,14 @@
             "baidu_map_info_window_text": {
                 "title": "百度地图标注文字",
                 "name": "baidu_map_info_window_text",
-                "value": "ThinkCMF<br/><span class=''>地址：上海市徐汇区斜土路2601号</span>",
+                "value": "ListenFlower.花语图舍<br/><span class=''>地址：山东省青岛市高新区华中路北端</span>",
                 "type": "text",
                 "tip": "百度地图标注文字,支持简单html代码",
                 "rule": []
             },
             "company_location": {
                 "title": "公司坐标",
-                "value": "",
+                "value": "120.294111,36.288436",
                 "type": "location",
                 "tip": "",
                 "rule": {
@@ -24,7 +25,7 @@
             },
             "address_cn": {
                 "title": "公司地址",
-                "value": "上海市徐汇区斜土路0001号",
+                "value": "山东省青岛市高新区华中路北端",
                 "type": "text",
                 "tip": "",
                 "rule": {
@@ -33,7 +34,7 @@
             },
             "address_en": {
                 "title": "公司地址（英文）",
-                "value": "NO.0001 Xie Tu Road, Shanghai China",
+                "value": "NO.0099 Hua Zhong Road, Shandong China",
                 "type": "text",
                 "tip": "",
                 "rule": {
@@ -42,7 +43,7 @@
             },
             "email": {
                 "title": "公司邮箱",
-                "value": "catman@thinkcmf.com",
+                "value": "1095909657@qq.com",
                 "type": "text",
                 "tip": "",
                 "rule": {
@@ -51,7 +52,7 @@
             },
             "phone_cn": {
                 "title": "公司电话",
-                "value": "021 1000 0001",
+                "value": "13963976601",
                 "type": "text",
                 "tip": "",
                 "rule": {
@@ -60,7 +61,7 @@
             },
             "phone_en": {
                 "title": "公司电话（英文）",
-                "value": "+8621 1000 0001",
+                "value": "+8613963976601",
                 "type": "text",
                 "tip": "",
                 "rule": {
@@ -69,7 +70,7 @@
             },
             "qq": {
                 "title": "联系QQ",
-                "value": "478519726",
+                "value": "1095909657",
                 "type": "text",
                 "tip": "多个 QQ以英文逗号隔开",
                 "rule": {

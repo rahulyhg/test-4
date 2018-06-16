@@ -1,0 +1,19 @@
+{
+    "name": "导航条2",
+    "action": "public/Nav2",
+    "description": "导航条模板文件,开发版",
+    "is_public": "1",
+    "order": 1.0,
+    "more": {
+        "vars": {
+            "company_name": {
+                "title": "公司名称",
+                "name": "company_name",
+                "value": "ListenFlower",
+                "type": "text",
+                "tip": "哈哈，小男男",
+                "rule": []
+            }
+        }
+    }
+}

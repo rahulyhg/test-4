@@ -31,7 +31,10 @@ class PageController extends HomeBaseController
 
         $tplName = empty($more['template']) ? 'page' : $more['template'];
 
-        return $this->fetch("/$tplName");
+        // return $this->fetch("/$tplName");
+        return $this->fetch("/contact");
     }
+
+    
 
 }

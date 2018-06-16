@@ -32,6 +32,9 @@
                             class="fa fa-envelope"></i> <span class="count">0</span></a>
                 </li>
                 -->
+                <li>
+                    <a href="user/message" target="_blank"><i class="fa fa-comment text-info"><small>123</small></i></a>
+                </li>
                 <li class="dropdown user login">
                     <a class="dropdown-toggle user" data-toggle="dropdown" href="#">
                         <php>$user=cmf_get_current_user();</php>
@@ -44,6 +47,8 @@
                     </a>
                     <ul class="dropdown-menu pull-right">
                         <li><a href="{:cmf_url('user/Profile/center')}"><i class="fa fa-user"></i> &nbsp;个人中心</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{:cmf_url('user/Profile/image')}"><i class="fa fa-image"></i> &nbsp;发作品</a></li>
                         <li class="divider"></li>
                         <li><a href="{:cmf_url('user/Index/logout')}"><i class="fa fa-sign-out"></i> &nbsp;退出</a></li>
                     </ul>
@@ -70,14 +75,14 @@
                         <if condition="$level gt 1">
                             <li class="menu-item menu-item-level-{$level} levelgt1">
                                 <a href="{$menu.href|default=''}" target="{$menu.target|default=''}">
-                                    <i class="fa {$menu.icon|default=''}"></i>
+                                    <i class="fa fa-fw {$menu.icon|default=''}"></i>
                                     <span>{$menu.name|default=''}</span>
                                 </a>
                             </li>
                             <else/>
                             <li class="menu-item menu-item-level-{$level}">
                                 <a href="{$menu.href|default=''}" target="{$menu.target|default=''}">
-                                    <i class="fa {$menu.icon|default=''}"></i>
+                                    <i class="fa fa-fw {$menu.icon|default=''}"></i>
                                     <span>{$menu.name|default=''}</span>
                                 </a>
                             </li>

@@ -153,7 +153,7 @@ abstract class Plugin
      * @return void
      */
     final protected function assign($name, $value = '')
-    {
+    {   //var_dump($name);die;
         $this->view->assign($name, $value);
     }
 
@@ -231,6 +231,7 @@ abstract class Plugin
     {
         static $_config = [];
         $name = $this->getName();
+        //var_dump($name); //die; //'SwitchThemeDemo'
         if (isset($_config[$name])) {
             return $_config[$name];
         }

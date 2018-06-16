@@ -8,7 +8,7 @@
             <div class="panel-body home-info">
                 <ul class="list-unstyled">
                     <li>
-                        <em>官网</em> <span><a href="http://www.thinkcmf.com" target="_blank">www.thinkcmf.com</a></span>
+                        <em>官网</em> <span><a href="http://www.ListenFlower.cc" target="_blank">www.ListenFlower.cc</a></span>
                     </li>
                     <li><em>QQ 群</em> <span>100828313,316669417</span></li>
                     <li><em>联系邮箱</em> <span>catman@thinkcmf.com</span></li>
@@ -107,6 +107,7 @@
 </head>
 <body>
 <div class="wrap">
+
     <empty name="has_smtp_setting">
         <div class="grid-item col-md-12">
             <div class="alert alert-danger alert-dismissible fade in" role="alert" style="margin-bottom: 0;">
@@ -133,7 +134,7 @@
 
     <div class="grid-item col-md-12" id="thinkcmf-notices-grid" style="display:none;">
         <div class="dashboard-box">
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title">{:lang('SYSTEM_NOTIFICATIONS')}</h3>
                 </div>
@@ -254,6 +255,7 @@
             var $this = $(this);
 
             widgets.push({
+                // name: this.dataset.widget,
                 name: $this.data('widget'),
                 is_system: $this.data('system')
             });

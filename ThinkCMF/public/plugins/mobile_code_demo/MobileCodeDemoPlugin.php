@@ -24,23 +24,21 @@ class MobileCodeDemoPlugin extends Plugin
         'version'     => '1.0'
     ];
 
-    public $has_admin = 0;//插件是否有后台管理界面
+    public $has_admin = 1;//插件是否有后台管理界面
 
-    public function install() //安装方法必须实现
-    {
-        return true;//安装成功返回true，失败false
+    public function install() {
+        return true;
     }
 
-    public function uninstall() //卸载方法必须实现
-    {
-        return true;//卸载成功返回true，失败false
+    public function uninstall() {
+        return true;
     }
 
     //实现的send_mobile_verification_code钩子方法
-    public function sendMobileVerificationCode($param)
-    {
-        $mobile        = $param['mobile'];//手机号
-        $code          = $param['code'];//验证码
+    public function sendMobileVerificationCode($param) {
+
+        $mobile        = $param['mobile'];
+        $code          = $param['code'];
         $config        = $this->getConfig();
         $expire_minute = intval($config['expire_minute']);
         $expire_minute = empty($expire_minute) ? 30 : $expire_minute;
