@@ -17,9 +17,12 @@ Class ReminderPlugin extends Plugin {
     public $hasAdmin = 1;   //插件是否有后台管理界面
 
     //实现的reminder_show钩子方法
-    public function reminderShow($param) {
+    // public function footerStart($param) {
+    public function beforeBodyEnd($param) {
+    // 怎样自定义一个钩子，还没有解决，但是可以参考手机发送验证码的案例
         $config = $this->getConfig();
-        $this->assign($config);
+        // var_dump($config);
+        $this->assign('config', $config);
         echo $this->fetch('widget');
     }
 

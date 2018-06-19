@@ -14,9 +14,8 @@ use think\Db;
 class IndexController extends PluginBaseController
 {
     function index() {
-    	$reminderInfo = Db:table('cmf_plugin')->where('reminder', $name)->field('title, config')->select();
+    	$reminderInfo = Db::table('cmf_plugin')->where('name', 'reminder')->field('title, config')->find();
     	$this->assign('reminder', $reminderInfo);
     	return $this->fetch('/index');
-    	return true;
     }
 }

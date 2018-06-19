@@ -15,7 +15,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
 
     <link rel="shortcut icon" href="__PLUGIN_TMPL__/assets/images/favicon.ico" type="image/x-icon">
-
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
     <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
     <!--
     <link rel="canonical" href="http://www.example.com/">
@@ -24,22 +24,18 @@
 </head>
 <body>
 <div class="well well-warning" style="display: inline-block;">
-    <h2>ThinkCMF插件演示</h2>
-    {:lang('plugin_reminder_hello_world')}
+    <h2>{$reminder['title']}</h2>
+    <small>{:lang('plugin_reminder_hello_world')}</small> 
 
     <p>
         <b>生成插件控制器 URL:</b>{:cmf_plugin_url('Reminder://Index/index',['id'=>1])}
     </p>
 
-    <p>
-        <b>foreach: 这里的输出内容还要填写，先编辑后台去了</b>
-    </p>
-    <ol>
-        <foreach name="users" item="vo">
-            <li>{$vo.user_login} {:date('Y-m-d H:i:s',$vo['create_time'])}</li>
 
-        </foreach>
-    </ol>
+    <php>
+        $config = json_decode($reminder['config']);
+    </php>
+    <p class="bg-warning" style="padding: 15px;">{$config->content}</p>
 
 
 </div>

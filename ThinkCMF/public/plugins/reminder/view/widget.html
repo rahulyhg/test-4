@@ -14,36 +14,36 @@
 		<b>插件模板根目录:</b>__PLUGIN_TMPL__
 	</p>
 
-	<p>
-		<b>文本:</b>{$text}
-	</p>
-	<p>
-		<b>密码:</b>{$password}
-	</p>
-
-	<php> $select_options=array( '1'=>'ThinkCMFX', '2'=>'ThinkCMF',
-		'3'=>'跟猫玩糗事', '4'=>'门户应用' ); </php>
+	<p class="bg-warning" style="padding: 15px;">{$config.content}</p>
 
 	<p>
-		<b>下拉列表:</b>{$select_options[$select]}
+		引用百度地图：{$config.location}
 	</p>
 
-	<php> $checkbox_options=array( '1'=>'genmaowan.com',
-		'2'=>'www.thinkcmf.com', ); </php>
-
-	<p>
-		<b>多选框:</b>
-		<foreach name='checkbox' item="vo">{$checkbox_options[$vo]}</foreach>
-	</p>
-
-	<php> $radio_options=array( '1'=>'ThinkCMFX', '2'=>'ThinkCMF' );
-	</php>
-	<p>
-		<b>单选框:</b>{$radio_options[$radio]}
-	</p>
-
-	<p>
-		<b>多行文本:</b>{$textarea}
-	</p>
+	<div class="section slice no-padding">
+			<script src="//api.map.baidu.com/api?v=1.3"></script>
+	    <div id="mapCanvas" class="map-canvas no-margin" style="height: 450px;">
+	        <php>
+	            $company_location=$config['location'];
+	            $company_location=explode(',',$company_location);
+	            $company_location_lng=$company_location[0];
+	            $company_location_lat=$company_location[1];
+	        </php>
+	        <script>
+	        	window.onload = function () {
+	            let imap   = new BMap.Map("mapCanvas"); // 创建Map实例
+	            let point = new BMap.Point("{$company_location_lng}", "{$company_location_lat}"); // 创建点坐标
+	            imap.centerAndZoom(point, 15); // 初始化地图,设置中心点坐标和地图级别。
+	            imap.enableScrollWheelZoom(); //启用滚轮放大缩小
+	            //添加缩放控件
+	           	imap.addControl(new BMap.NavigationControl());
+	           	imap.addControl(new BMap.ScaleControl());
+	           	imap.addControl(new BMap.OverviewMapControl());
+	            let marker = new BMap.Marker(point); // 创建标注
+	            imap.addOverlay(marker); // 将标注添加到地图中
+	          }
+	        </script>
+	    </div>
+	</div>
 
 </div>
