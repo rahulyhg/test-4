@@ -3,12 +3,12 @@
 <body>
 	<div class="wrap">
 		<ul class="nav nav-tabs">
-			<li><a href="{:url('Menu/index')}">后台菜单</a></li>
-			<li><a href="{:url('Menu/add')}">添加菜单</a></li>
-			<li><a href="{:url('Menu/lists')}">所有菜单</a></li>
-			<li class="active"><a>编辑菜单</a></li>
+			<li><a href="{:url('Location/index')}">地区管理</a></li>
+			<!-- <li><a href="{:url('Location/add')}">添加菜单</a></li> -->
+			<!-- <li><a href="{:url('Location/lists')}">所有菜单</a></li> -->
+			<li class="active"><a>编辑地区</a></li>
 		</ul>
-		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('menu/editPost')}">
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('location/editPost')}">
 			<div class="form-group">
 				<label for="input-parent_id" class="col-sm-2 control-label"><span class="form-required">*</span>上级</label>
 				<div class="col-md-6 col-sm-10">
@@ -89,7 +89,7 @@
 				<div class="col-sm-offset-2 col-sm-10">
 					<input type="hidden" name="id" value="{$data.id}" />
 					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
-					<a class="btn btn-default" href="{:url('menu/index')}">{:lang('BACK')}</a>
+					<a class="btn btn-default" href="{:url('location/index')}">{:lang('BACK')}</a>
 				</div>
 			</div>
 		</form>

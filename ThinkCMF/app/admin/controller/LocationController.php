@@ -31,7 +31,7 @@ class LocationController extends AdminBaseController
      */
     public function index()
     {
-        session('admin_locstion_index', 'Location/index');
+        session('admin_location_index', 'Location/index');
         $result     = Db::name('AdminLocation')->order(["list_order" => "ASC"])->select()->toArray();
         // var_dump($result);
         $tree       = new Tree();
@@ -42,20 +42,20 @@ class LocationController extends AdminBaseController
         foreach ($result as $m) {
             $newMenus[$m['id']] = $m;
         }
-        var_dump($newMenus);
+        // var_dump($newMenus);
         foreach ($result as $key => $value) {
 
             $result[$key]['parent_id_node'] = ($value['parent_id']) ? ' class="child-of-node-' . $value['parent_id'] . '"' : '';
             $result[$key]['style']          = empty($value['parent_id']) ? '' : 'display:none;';
-            $result[$key]['str_manage']     = '<a href="' . url("Menu/add", ["parent_id" => $value['id'], "menu_id" => $this->request->param("menu_id")])
-                . '">' . lang('ADD_SUB_MENU') . '</a>  <a href="' . url("Menu/edit", ["id" => $value['id'], "menu_id" => $this->request->param("menu_id")])
-                . '">' . lang('EDIT') . '</a>  <a class="js-ajax-delete" href="' . url("Menu/delete", ["id" => $value['id'], "menu_id" => $this->request->param("menu_id")]) . '">' . lang('DELETE') . '</a> ';
+            $result[$key]['str_manage']     = '<a href="' . url("Location/add", ["parent_id" => $value['id'], "Location_id" => $this->request->param("Location_id")])
+                . '">' . '添加下级城市' . '</a>  <a href="' . url("Location/edit", ["id" => $value['id'], "Location_id" => $this->request->param("Location_id")])
+                . '">' . lang('EDIT') . '</a>  <a class="js-ajax-delete" href="' . url("Location/delete", ["id" => $value['id'], "location_id" => $this->request->param("location_id")]) . '">' . lang('DELETE') . '</a> ';
             $result[$key]['status']         = $value['status'] ? lang('DISPLAY') : lang('HIDDEN');
             // if (APP_DEBUG) {
             //     $result[$key]['app'] = $value['app'] . "/" . $value['controller'] . "/" . $value['action'];
             // }
         }
-
+        // var_dump($result);
         $tree->init($result);
         $str      = "<tr id='node-\$id' \$parent_id_node style='\$style'>
                         <td style='padding-left:20px;'><input name='list_orders[\$id]' type='text' size='3' value='\$list_order' class='input input-order'></td>
@@ -64,7 +64,9 @@ class LocationController extends AdminBaseController
                         <td>\$status</td>
                         <td>\$str_manage</td>
                     </tr>";
+        // var_dump($str);
         $category = $tree->getTree(0, $str);
+        // var_dump($category);
         $this->assign("category", $category);
         return $this->fetch();
     }
@@ -82,13 +84,14 @@ class LocationController extends AdminBaseController
      *     'param'  => ''
      * )
      */
-    public function lists()
-    {
-        session('admin_menu_index', 'Menu/lists');
-        $result = Db::name('AdminMenu')->order(["app" => "ASC", "controller" => "ASC", "action" => "ASC"])->select();
-        $this->assign("menus", $result);
-        return $this->fetch();
-    }
+    // public function lists()
+    // {
+    //     return true != false;
+    //     session('admin_location_index', 'Location/lists');
+    //     $result = Db::name('AdminLocation')->select();
+    //     $this->assign("menus", $result);
+    //     return $this->fetch();
+    // }
 
     /**
      * 地区管理添加
@@ -107,7 +110,7 @@ class LocationController extends AdminBaseController
     {
         $tree     = new Tree();
         $parentId = $this->request->param("parent_id", 0, 'intval');
-        $result   = Db::name('AdminMenu')->order(["list_order" => "ASC"])->select();
+        $result   = Db::name('AdminLocation')->order(["list_order" => "ASC"])->select();
         $array    = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
@@ -117,6 +120,7 @@ class LocationController extends AdminBaseController
         $tree->init($array);
         $selectCategory = $tree->getTree(0, $str);
         $this->assign("select_category", $selectCategory);
+        $this->assign("parent_id", $parentId);
         return $this->fetch();
     }
 
@@ -136,38 +140,42 @@ class LocationController extends AdminBaseController
     public function addPost()
     {
         if ($this->request->isPost()) {
-            $result = $this->validate($this->request->param(), 'AdminMenu');
+            $result = $this->validate($this->request->param(), 'AdminLocation');
+            // return $this->request->param();
+            // return $result;die;
             if ($result !== true) {
                 $this->error($result);
             } else {
                 $data = $this->request->param();
-                Db::name('AdminMenu')->strict(false)->field(true)->insert($data);
+                Db::name('AdminLocation')->strict(false)->field(true)->insert($data);
 
-                $app          = $this->request->param("app");
-                $controller   = $this->request->param("controller");
-                $action       = $this->request->param("action");
-                $param        = $this->request->param("param");
-                $authRuleName = "$app/$controller/$action";
-                $menuName     = $this->request->param("name");
+                // 添加目录的时候顺便增加目录的访问权限，跟目前业务无关
+                // $app          = $this->request->param("app");
+                // $controller   = $this->request->param("controller");
+                // $action       = $this->request->param("action");
+                // $param        = $this->request->param("param");
+                // $authRuleName = "$app/$controller/$action";
+                // $menuName     = $this->request->param("name");
 
-                $findAuthRuleCount = Db::name('auth_rule')->where([
-                    'app'  => $app,
-                    'name' => $authRuleName,
-                    'type' => 'admin_url'
-                ])->count();
-                if (empty($findAuthRuleCount)) {
-                    Db::name('AuthRule')->insert([
-                        "name"  => $authRuleName,
-                        "app"   => $app,
-                        "type"  => "admin_url", //type 1-admin rule;2-user rule
-                        "title" => $menuName,
-                        'param' => $param,
-                    ]);
-                }
-                $sessionAdminMenuIndex = session('admin_menu_index');
-                $to                    = empty($sessionAdminMenuIndex) ? "Menu/index" : $sessionAdminMenuIndex;
-                $this->_exportAppMenuDefaultLang();
-                cache(null, 'admin_menus');// 删除后台菜单缓存
+                // $findAuthRuleCount = Db::name('auth_rule')->where([
+                //     'app'  => $app,
+                //     'name' => $authRuleName,
+                //     'type' => 'admin_url'
+                // ])->count();
+                // if (empty($findAuthRuleCount)) {
+                //     Db::name('AuthRule')->insert([
+                //         "name"  => $authRuleName,
+                //         "app"   => $app,
+                //         "type"  => "admin_url", //type 1-admin rule;2-user rule
+                //         "title" => $menuName,
+                //         'param' => $param,
+                //     ]);
+                // }
+                $sessionAdminMenuIndex = session('admin_location_index');
+                $to                    = empty($sessionAdminMenuIndex) ? "Location/index" : $sessionAdminMenuIndex;
+                // 导出地区语言包 因为目标群体不是非汉语人群，多语言的操作暂时就不进行了
+                // $this->_exportAppMenuDefaultLang();
+                cache(null, 'admin_location');// 删除后台菜单缓存
                 $this->success("添加成功！", url($to));
             }
         }
@@ -701,7 +709,7 @@ class LocationController extends AdminBaseController
     /**
      *  导出地区语言包
      */
-    private function _exportAppMenuDefaultLang()
+    private function _exportAppLocationDefaultLang()
     {
         $menus         = Db::name('AdminMenu')->order(["app" => "ASC", "controller" => "ASC", "action" => "ASC"])->select();
         $langDir       = config('DEFAULT_LANG');

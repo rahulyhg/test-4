@@ -4,8 +4,8 @@
 <div class="wrap js-check-wrap">
     <ul class="nav nav-tabs">
         <li class="active"><a href="{:url('Location/index')}">地区管理</a></li>
-        <li><a href="{:url('Location/add')}">添加地区</a></li>
-        <li><a href="{:url('Location/lists')}">所有地区</a></li>
+        <!-- <li><a href="{:url('Location/add')}">添加地区</a></li> -->
+        <!-- <li><a href="{:url('Location/lists')}">所有地区</a></li> -->
     </ul>
     <form class="js-ajax-form" action="{:url('Location/listOrder')}" method="post">
         <div class="table-actions">
@@ -16,7 +16,7 @@
             <tr>
                 <th width="80">{:lang('SORT')}</th>
                 <th width="50">ID</th>
-                <th>{:lang('NAME')}</th>
+                <th>地区名称</th>
                 <th width="80">{:lang('STATUS')}</th>
                 <th width="180">{:lang('ACTIONS')}</th>
             </tr>
@@ -28,7 +28,7 @@
             <tr>
                 <th width="80">{:lang('SORT')}</th>
                 <th width="50">ID</th>
-                <th>{:lang('NAME')}</th>
+                <th>地区名称</th>
                 <th width="80">{:lang('STATUS')}</th>
                 <th width="180">{:lang('ACTIONS')}</th>
             </tr>
