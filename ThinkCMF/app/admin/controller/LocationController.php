@@ -198,8 +198,8 @@ class LocationController extends AdminBaseController
     {
         $tree   = new Tree();
         $id     = $this->request->param("id", 0, 'intval');
-        $rs     = Db::name('AdminMenu')->where(["id" => $id])->find();
-        $result = Db::name('AdminMenu')->order(["list_order" => "ASC"])->select();
+        $rs     = Db::name('AdminLocation')->where(["id" => $id])->find();
+        $result = Db::name('AdminLocation')->order(["list_order" => "ASC"])->select();
         $array  = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $rs['parent_id'] ? 'selected' : '';
@@ -230,58 +230,18 @@ class LocationController extends AdminBaseController
     {
         if ($this->request->isPost()) {
             $id      = $this->request->param('id', 0, 'intval');
-            $oldMenu = Db::name('AdminMenu')->where(['id' => $id])->find();
+            $oldMenu = Db::name('AdminLocation')->where(['id' => $id])->find();
 
-            $result = $this->validate($this->request->param(), 'AdminMenu.edit');
+            $result = $this->validate($this->request->param(), 'AdminLocation.edit');
 
             if ($result !== true) {
                 $this->error($result);
             } else {
-                Db::name('AdminMenu')->strict(false)->field(true)->update($this->request->param());
-                $app          = $this->request->param("app");
-                $controller   = $this->request->param("controller");
-                $action       = $this->request->param("action");
-                $param        = $this->request->param("param");
-                $authRuleName = "$app/$controller/$action";
-                $menuName     = $this->request->param("name");
 
-                $findAuthRuleCount = Db::name('auth_rule')->where([
-                    'app'  => $app,
-                    'name' => $authRuleName,
-                    'type' => 'admin_url'
-                ])->count();
-                if (empty($findAuthRuleCount)) {
-                    $oldApp        = $oldMenu['app'];
-                    $oldController = $oldMenu['controller'];
-                    $oldAction     = $oldMenu['action'];
-                    $oldName       = "$oldApp/$oldController/$oldAction";
-                    $findOldRuleId = Db::name('AuthRule')->where(["name" => $oldName])->value('id');
-                    if (empty($findOldRuleId)) {
-                        Db::name('AuthRule')->insert([
-                            "name"  => $authRuleName,
-                            "app"   => $app,
-                            "type"  => "admin_url",
-                            "title" => $menuName,
-                            "param" => $param
-                        ]);//type 1-admin rule;2-user rule
-                    } else {
-                        Db::name('AuthRule')->where(['id' => $findOldRuleId])->update([
-                            "name"  => $authRuleName,
-                            "app"   => $app,
-                            "type"  => "admin_url",
-                            "title" => $menuName,
-                            "param" => $param]);//type 1-admin rule;2-user rule
-                    }
-                } else {
-                    Db::name('AuthRule')->where([
-                        'app'  => $app,
-                        'name' => $authRuleName,
-                        'type' => 'admin_url'
-                    ])->update(["title" => $menuName, 'param' => $param]);//type 1-admin rule;2-user rule
-                }
-                $this->_exportAppMenuDefaultLang();
-                cache(null, 'admin_menus');// 删除后台菜单缓存
+                Db::name('AdminLocation')->strict(false)->field(true)->update($this->request->param());
+                cache(null, 'admin_Location');// 删除后台菜单缓存
                 $this->success("保存成功！");
+
             }
         }
     }
@@ -302,12 +262,12 @@ class LocationController extends AdminBaseController
     public function delete()
     {
         $id    = $this->request->param("id", 0, 'intval');
-        $count = Db::name('AdminMenu')->where(["parent_id" => $id])->count();
+        $count = Db::name('AdminLocation')->where(["parent_id" => $id])->count();
         if ($count > 0) {
-            $this->error("该菜单下还有子菜单，无法删除！");
+            $this->error("该城市下还有子城市，为避免混乱不能删除！");
         }
-        if (Db::name('AdminMenu')->delete($id) !== false) {
-            $this->success("删除菜单成功！");
+        if (Db::name('AdminLocation')->delete($id) !== false) {
+            $this->success("删除城市成功！");
         } else {
             $this->error("删除失败！");
         }
@@ -328,8 +288,8 @@ class LocationController extends AdminBaseController
      */
     public function listOrder()
     {
-        $adminMenuModel = new AdminMenuModel();
-        parent::listOrders($adminMenuModel);
+        $adminLocationModel = new AdminLocationModel();
+        parent::listOrders($adminLocationModel);
         $this->success("排序更新成功！");
     }
 
