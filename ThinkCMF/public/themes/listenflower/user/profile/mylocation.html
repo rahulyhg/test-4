@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{$site_info.site_name}</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content="">
+    <include file="public@head"/>
+    <style type="text/css">
+        .tab-content {
+            overflow: visible;
+        }
+
+        .uploaded_avatar_area {
+            margin-top: 20px;
+        }
+
+        .uploaded_avatar_btns {
+            margin-top: 20px;
+        }
+
+        .uploaded_avatar_area .uploaded_avatar_btns {
+            display: none;
+        }
+    </style>
+</head>
+<body class="body-white" id="top">
+<include file="public@nav"/>
+
+<div class="container tc-main">
+    <div class="row">
+        <div class="col-md-3">
+            <include file="public@usernav"/>
+        </div>
+        <div class="col-md-9">
+            <div class="tabs">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-map-signs"></i> 我的地址</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="one">
+                        <php>$location;</php>
+                        <!-- 用户{$user['user_nickname']};用户ID:{$user['id']};地址码{$location['location_id']} -->
+                        
+                    </div>
+
+                    <div id="location-wrap">
+                        <style type="text/css" scoped>
+                            .location-wrap { margin: 2rem 0rem; }
+                            .location-wrap a { line-height: 4rem; vertical-align: sub; color: #369; padding-top: 2rem;}
+                            .active { color: #747d13; }
+                        </style>
+
+                        <div id="selected-show">
+                            <!-- 这里按照面包屑导航的形式显示选择的地址地址 <br> -->
+                            
+                        </div>
+                        <div id="location-list">
+                            <!-- 这里先显示省级地址，按照字母顺序；选择省级后，被选择的内容跳到上部，本区域换成被选择区域下级地址 -->
+                        </div>
+                        <script>
+                            (function($){
+                                let $selected_show = $('#selected-show');
+                                let $location_list = $('#location-list');
+                                let user_location = {$location['location_id']};
+                                let parent_list = [];
+                                let brother_list = [];
+
+                                if (user_location) {
+                                    // 如果用户的地址已经设定
+                                        // 获取包括自身在内的祖先级城市
+                                    $.get("{:url('portal/Location/getParentCity')}", { id : user_location }, function(data) {
+                                        $selected_show.empty();
+
+                                        parent_list = data;
+
+                                        for (let i = data.length - 1; i >= 0; i--) {
+                                            // 检查是否需要添加 active 样式
+                                            let active_class = '';
+                                            if (data[i]['id'] == user_location) {
+                                                active_class = 'active';
+                                            }
+
+                                            let city = `<a href='#' class="${active_class}" data-pid="${data[i]['parent_id']}" data-id="${data[i]['id']}">${data[i]['name']}</a>&nbsp;&nbsp;&nbsp;`;
+                                            $selected_show.append(city);
+                                        }
+                                    });
+                                    // 同时获取包括自身在内的所有兄弟分类
+                                    $.get("{:url('portal/Location/getBrotherCity')}", { id : user_location }, function(data){
+                                        brother_list = data;
+                                        let citys = data;
+                                        let html = '';
+                                        $location_list.empty();
+                                        for(let city of citys){
+                                            // 检查是否需要添加 active 样式
+                                            let active_class = '';
+                                            if (city['id'] == user_location) {
+                                                active_class = 'active';
+                                            }
+
+                                            let html = `<a href='#' class="${active_class}" data-pid="${city['parent_id']}" data-id="${city['id']}">${city['name']}</a>&nbsp;&nbsp;&nbsp;`;
+                                            $location_list.append(html);
+                                        };
+                                    });
+                                } else {
+                                    // 如果用户的地址未设定
+                                    $.get("{:url('portal/Location/getChildCity')}", { pid : 1 }, function(data) {
+                                        $selected_show.empty().append(data);
+                                    });
+                                }
+
+                                // 绑定点击事件
+                                // 1.
+                                $selected_show.on('click', 'a', function(e) {
+                                    e.preventDefault();
+                                    currentId = $(this).data('id');
+                                    // 已选
+                                    $.get("{:url('portal/Location/getParentCity')}", { id : currentId }, function(data) {
+                                        $selected_show.empty();
+                                        parent_list = data;
+
+                                        for (let i = data.length - 1; i >= 0; i--) {
+                                            // 检查是否需要添加 active 样式
+                                            let active_class = '';
+                                            if (data[i]['id'] == currentId) {
+                                                active_class = 'active';
+                                            }
+                                            let city = `<a href='#' class="${active_class}" data-pid="${data[i]['parent_id']}" data-id="${data[i]['id']}">${data[i]['name']}</a>&nbsp;&nbsp;&nbsp;`;
+                                            $selected_show.append(city);
+                                        }
+                                    });
+                                    // 待选
+                                    $.get("{:url('portal/Location/getChildCity')}", { pid : currentId }, function(data){
+                                        brother_list = data;
+                                        let citys = data;
+                                        let html = '';
+                                        $location_list.empty();
+                                        for(let city of citys){
+                                            // 检查是否需要添加 active 样式
+                                            let active_class = '';
+                                            if (city['id'] == currentId) {
+                                                active_class = 'active';
+                                            }
+
+                                            let html = `<a href='#' class="${active_class}" data-pid="${city['parent_id']}" data-id="${city['id']}">${city['name']}</a>&nbsp;&nbsp;&nbsp;`;
+                                            $location_list.append(html);
+                                        };
+                                    });
+                                    save_location();
+
+                                });
+                                // 2.
+                                $location_list.on('click', 'a', function(e) {
+                                    e.preventDefault();
+                                    currentId = $(this).data('id');
+
+                                    // 已选区
+                                    $.get("{:url('portal/Location/getParentCity')}", { id : currentId }, function(data) {
+                                        $selected_show.empty();
+                                        parent_list = data;
+
+                                        for (let i = data.length - 1; i >= 0; i--) {
+                                            // 检查是否需要添加 active 样式
+                                            let active_class = '';
+                                            if (data[i]['id'] == currentId) {
+                                                active_class = 'active';
+                                            }
+                                            let city = `<a href='#' class="${active_class}" data-pid="${data[i]['parent_id']}" data-id="${data[i]['id']}">${data[i]['name']}</a>&nbsp;&nbsp;&nbsp;`;
+                                            $selected_show.append(city);
+                                        }
+                                        save_location();
+                                    });
+                                    // 待选区
+                                    $.get("{:url('portal/Location/getChildCity')}", { pid : currentId }, function(data){
+                                        brother_list = data;
+                                        let citys = data;
+                                        let html = '';
+                                        $location_list.empty();
+                                        for(let city of citys){
+                                            // 检查是否需要添加 active 样式
+                                            let active_class = '';
+                                            if (city['id'] == currentId) {
+                                                active_class = 'active';
+                                            }
+
+                                            let html = `<a href='#' class="${active_class}" data-pid="${city['parent_id']}" data-id="${city['id']}">${city['name']}</a>&nbsp;&nbsp;&nbsp;`;
+                                            $location_list.append(html);
+                                        };
+                                    });
+                                });
+
+
+
+                                function get_brothers() {
+
+                                }
+                                function get_parents() {
+
+                                }
+                                function save_location() {
+                                    $city = $("#selected-show .active");
+                                    $.post("{:url('portal/Location/saveCity')}", {id: $city.data('id')}, function(data, textStatus, xhr) {
+                                        /*optional stuff to do after success */
+                                        // console.log(data, textStatus, xhr);
+                                    });
+
+                                }
+                            })(jQuery);
+                        </script>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <include file="public@footer"/>
+    <script src="https://cdn.bootcss.com/axios/0.17.1/axios.js"></script>
+</div>
+<!-- /container -->
+
+<include file="public@scripts"/>
+<script type="text/javascript">
+</script>
+</body>
+</html>

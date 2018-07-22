@@ -18,7 +18,7 @@
 		});
 		
 		$.post("{:url('user/index/isLogin')}",{},function(data){
-		    console.log(data);
+		    // console.log(data);
 			if(data.code==1){
 				if(data.data.user.avatar){
 				}
@@ -30,13 +30,13 @@
 			}
 
 			if(data.code==0){
-                $("#main-menu-user li.login").hide();
+        $("#main-menu-user li.login").hide();
 				$("#main-menu-user li.offline").show();
 			}
 
 		});
 
-        ;(function($){
+		;(function($){
 			$.fn.totop=function(opt){
 				var scrolling=false;
 				return this.each(function(){

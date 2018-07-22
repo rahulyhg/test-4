@@ -36,7 +36,7 @@ class AdminCategoryController extends AdminBaseController
     {
         $portalCategoryModel = new PortalCategoryModel();
         $categoryTree        = $portalCategoryModel->adminCategoryTableTree();
-
+        // var_dump($categoryTree);
         $this->assign('category_tree', $categoryTree);
         return $this->fetch();
     }

@@ -82,6 +82,7 @@ class ProfileController extends UserBaseController
             $editData = new UserModel();
             if ($editData->editData($data)) {
                 $this->success(lang('EDIT_SUCCESS'), "user/profile/center");
+                // $this->success(lang('EDIT_SUCCESS'));
             } else {
                 $this->error(lang('NO_NEW_INFORMATION'));
             }
@@ -304,6 +305,25 @@ class ProfileController extends UserBaseController
         } else {
             $this->error("请求错误");
         }
+    }
+
+    /**
+     * 用户地址显示和编辑页面
+     * @return [type] [description]
+     */
+    Public function mylocation() {
+        $request = $this->request->isPost();
+        $user = cmf_get_current_user();
+
+        if (true) {
+            
+        }
+
+        $location = DB::name('user_location')->where('user_id', $user['id'])->find();
+        
+        $this->assign('user', $user);
+        $this->assign('location', $location);
+        return $this->fetch();
     }
 
 }

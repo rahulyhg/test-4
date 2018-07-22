@@ -30,12 +30,16 @@ class PortalCategoryModel extends Model
     public function adminCategoryTree($selectId = 0, $currentCid = 0)
     {
         $where = ['delete_time' => 0];
+
         if (!empty($currentCid)) {
             $where['id'] = ['neq', $currentCid];
         }
+
         $categories = $this->order("list_order ASC")->where($where)->select()->toArray();
 
         $tree       = new Tree();
+
+        // var_dump($tree);
         $tree->icon = ['&nbsp;&nbsp;│', '&nbsp;&nbsp;├─', '&nbsp;&nbsp;└─'];
         $tree->nbsp = '&nbsp;&nbsp;';
 
@@ -54,6 +58,7 @@ class PortalCategoryModel extends Model
     }
 
     /**
+     * 生成分类 Table 结构
      * @param int|array $currentIds
      * @param string $tpl
      * @return string
@@ -61,9 +66,9 @@ class PortalCategoryModel extends Model
     public function adminCategoryTableTree($currentIds = 0, $tpl = '')
     {
         $where = ['delete_time' => 0];
-//        if (!empty($currentCid)) {
-//            $where['id'] = ['neq', $currentCid];
-//        }
+        if (!empty($currentCid)) {
+            $where['id'] = ['neq', $currentCid];
+        }
         $categories = $this->order("list_order ASC")->where($where)->select()->toArray();
 
         $tree       = new Tree();

@@ -204,6 +204,8 @@ parse;
     {
         $cid = empty($tag['cid']) ? '0' : $tag['cid'];
 
+        // var_dump($tag);
+        // var_dump($content);
         if (!empty($cid)) {
             $this->autoBuildVar($cid);
         }
@@ -224,6 +226,7 @@ if(!empty({$cid})){
 }
 ?>
 parse;
+        // var_dump($parse);
 
         return $parse;
 
