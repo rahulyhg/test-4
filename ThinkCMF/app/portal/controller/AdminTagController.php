@@ -82,6 +82,10 @@ class AdminTagController extends AdminBaseController
 
         $arrData = $this->request->param();
 
+        if ($arrData['name'] == '') {
+            $this->error('未填写信息，添加未完成');
+        }
+
         $portalTagModel = new PortalTagModel();
         $portalTagModel->isUpdate(false)->allowField(true)->save($arrData);
 

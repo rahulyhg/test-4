@@ -123,6 +123,7 @@ class Tree
         $number = 1;
         //一级栏目
         $child = $this->getChild($myId);
+        // var_dump($child);
 
         if (is_array($child)) {
             $total = count($child);
@@ -143,15 +144,15 @@ class Tree
 
                 $parentId = $value['parent_id'];
 
-
-                $parentId == 0 && $str_group ? eval("\$nstr = \"$str_group\";") : eval("\$nstr = \"$str\";");
-
+                ($parentId == 0) && $str_group ? eval("\$nstr = \"$str_group\";") : eval("\$nstr = \"$str\";");
+                
                 $this->ret .= $nstr;
                 $nbsp      = $this->nbsp;
                 $this->getTree($id, $str, $sid, $adds . $k . $nbsp, $str_group);
                 $number++;
             }
         }
+
         return $this->ret;
     }
 
