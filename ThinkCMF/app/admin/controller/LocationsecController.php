@@ -60,6 +60,7 @@ class LocationsecController extends AdminBaseController
         // var_dump($str);
         $category = $tree->getTree(9, $str);
         // var_dump($category);
+        // 因getTree函数还是深度循环函数，所以第二种方法暂停
         $this->assign("category", $category);
         return $this->fetch();
     }

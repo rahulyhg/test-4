@@ -145,7 +145,7 @@ class Tree
                 $parentId = $value['parent_id'];
 
                 ($parentId == 0) && $str_group ? eval("\$nstr = \"$str_group\";") : eval("\$nstr = \"$str\";");
-                
+
                 $this->ret .= $nstr;
                 $nbsp      = $this->nbsp;
                 $this->getTree($id, $str, $sid, $adds . $k . $nbsp, $str_group);

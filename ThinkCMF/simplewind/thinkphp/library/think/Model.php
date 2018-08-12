@@ -1393,6 +1393,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
         if (!empty($where)) {
             $this->updateWhere = $where;
         }
+        //var_dump($this);
         return $this;
     }
 

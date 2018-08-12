@@ -87,6 +87,11 @@ class AdminTagController extends AdminBaseController
         }
 
         $portalTagModel = new PortalTagModel();
+
+        if ($portalTagModel->where('name', $arrData['name'])->find()) {
+            $this->error('标签已经存在，添加未完成');
+        }
+
         $portalTagModel->isUpdate(false)->allowField(true)->save($arrData);
 
         $this->success(lang("SAVE_SUCCESS"));
@@ -145,6 +150,7 @@ class AdminTagController extends AdminBaseController
         $portalTagModel = new PortalTagModel();
 
         $portalTagModel->where(['id' => $intId])->delete();
+
         Db::name('portal_tag_post')->where('tag_id', $intId)->delete();
         $this->success(lang("DELETE_SUCCESS"));
     }

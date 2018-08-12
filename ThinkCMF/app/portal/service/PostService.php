@@ -210,6 +210,9 @@ class PostService
         return $article;
     }
 
+//    发布的页面
+//    传入待发布页面的 id
+//    返回此页面的数据
     public function publishedPage($pageId)
     {
 
@@ -225,7 +228,7 @@ class PostService
         $page            = $portalPostModel
             ->where($where)
             ->find();
-
+        //var_dump($page);
         return $page;
     }
 
