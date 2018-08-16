@@ -11,5 +11,8 @@ body{background:url('body_bg.jpg') no-repeat fixed center top}
     background: #fff;
     width: 100%;
     border-radius: 0px;
-    margin:0;
+    margin-bottom: 2rem;
+    box-shadow: 0px 1px 5px #ccc;
+    padding: 0rem 1.6rem;
 }
+

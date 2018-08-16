@@ -16,7 +16,7 @@ switch($ts){
 
 	//发送验证
 	case "post":
-	
+
 		$userid = aac('user')->isLogin();
 
 		$strUser = $new['user']->find('user_info',array(
@@ -36,7 +36,7 @@ switch($ts){
 		$email = $strUser['email'];
 
 		//发送邮件
-		$subject = $TS_SITE['site_title'].'会员真实性验证';
+		$subject = '花语.会员邮箱验证';
 		$content = '尊敬的'.$strUser['username'].'，<br />请点击以下链接进行会员验证：<a href="'.$TS_SITE['link_url'].'index.php?app=user&ac=verify&ts=do&email='.$email.'&verifycode='.$verifycode.'">'.$TS_SITE['link_url'].'index.php?app=user&ac=verify&ts=do&email='.$email.'&verifycode='.$verifycode.'</a>';
 
 		$result = aac('mail')->postMail($email,$subject,$content);

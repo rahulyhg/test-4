@@ -819,7 +819,7 @@ class PHPMailer
      */
     public function isSMTP()
     {
-        $this->Mailer = 'smtp';
+        $this->Mailer = 'SMTP';
     }
 
     /**

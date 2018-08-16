@@ -1,15 +1,15 @@
 <!--幻灯片-->
-<div id="carouselExampleIndicators" class="carousel slide mb-3" data-ride="carousel">
+<div id="carouselExampleIndicators" class="carousel slide mb-3 mt2" data-ride="carousel">
   <!-- Indicators -->
     <ol class="carousel-indicators">
-{loop $arrSlide $key $item}
+    {loop $arrSlide $key $item}
     <li data-target="#carousel-example-generic" data-slide-to="{$key}"{if $key==0} class="active"{/if}></li>
-{/loop}
+    {/loop}
   </ol>
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner">
-{loop $arrSlide $key $item}
+    {loop $arrSlide $key $item}
     <div class="carousel-item{if $key==0} active{/if}">
       <a href="{$item['url']}" title="{$item['title']}">
           <img class="d-block w-100" src="{SITE_URL}uploadfile/slide/{$item['photo']}" alt="{$item['title']}">
@@ -19,7 +19,7 @@
           </div>
       </a>
     </div>
-{/loop}
+    {/loop}
   </div>
 
   <!-- Controls -->

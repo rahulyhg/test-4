@@ -6,6 +6,8 @@ switch($ts){
 	//app列表
 	case "list":
 		$applists	= tsScanDir('app');
+		//var_dump($applists);die;
+
 		foreach($applists as $key=>$item){
 			if(is_file('app/'.$item.'/about.php')){
 				$arrApps[$key]['name'] = $item;
@@ -16,6 +18,7 @@ switch($ts){
 		foreach($arrApps as $item){
 			$arrApp[] = $item;
 		}
+        //var_dump($arrApp);
 
 		$title = 'APP管理';
 

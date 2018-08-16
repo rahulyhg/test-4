@@ -33,29 +33,28 @@ class mail extends tsApp{
 		}
 
 
-
         $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
         try {
             //Server settings
-            $mail->SMTPDebug = 0;                                 // Enable verbose debug output
+            $mail->SMTPDebug = 1;                                 // Enable verbose debug output
             $mail->isSMTP();                                      // Set mailer to use SMTP
             $mail->Host = $options['mailhost'];  // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;                               // Enable SMTP authentication
-            $mail->Username = $options['mailuser'];                 // SMTP username
+            // $mail->Username = $options['mailuser'];                 // SMTP username
+            $mail->Username = str_replace('@qq.com', '',  $options['mailuser']);
             $mail->Password = $options['mailpwd'];                           // SMTP password
 
 
             if($options['ssl']){
-                $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+                $mail->SMTPSecure = 'ssl';
             }
-
 
             $mail->Port = $options['mailport'];                                    // TCP port to connect to
 
             //Recipients
             $mail->setFrom($options['mailuser'], $TS_SITE['site_title']);
             $mail->addAddress($sendmail, '');     // Add a recipient
-            //$mail->addAddress($sendmail);               // Name is optional
+            // $mail->addAddress($sendmail);               // Name is optional
             $mail->addReplyTo($options['mailuser'], $TS_SITE['site_title']);
 
             /*
@@ -73,7 +72,7 @@ class mail extends tsApp{
             $mail->isHTML(true);                                  // Set email format to HTML
             $mail->Subject = $subject;
             $mail->Body    = $content;
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+            //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
             $mail->send();
             //echo 'Message has been sent';
@@ -81,7 +80,8 @@ class mail extends tsApp{
             return 1;
 
         } catch (Exception $e) {
-            //echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+            tsNotice($mail->ErrorInfo);
+            echo '信息未能被发送。 邮件错误原因可能是： ', $mail->ErrorInfo;
 
             return 0;
         }

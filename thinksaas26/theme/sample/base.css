@@ -7,7 +7,7 @@ body {
 }
 
 a{color:#515151}
-a:hover{text-decoration: none;color:#49a5de}
+a:hover{text-decoration: none;color:#fd7e14}
 
 .wto{white-space: nowrap;text-overflow: ellipsis;overflow: hidden;}
 
@@ -141,19 +141,41 @@ a:hover{text-decoration: none;color:#49a5de}
 }
 
 
-.appnav{overflow: hidden;}
-.appnav a {
-	float: left;
-	margin: 0 5px 0 0;
-	padding: 10px 10px;
-	position: relative;
-    border-bottom: solid 2px #fff;
-}
-.appnav .on {
-	border-bottom: solid 2px #49a5de;
-}
-.appnav a:hover{border-bottom: solid 2px #49a5de;}
+/*.appnav{overflow: hidden;}*/
+/*.appnav a {*/
+	/*float: left;*/
+	/*margin: 0 5px 0 0;*/
+	/*padding: 10px 13px;*/
+	/*position: relative;*/
+    /*border-bottom: solid 2px #fff;*/
+/*}*/
+/*.appnav .on {*/
+	/*border-bottom: solid 2px #fd7e14;*/
+/*}*/
+/*.appnav a:hover{border-bottom: solid 2px #fd7e14;}*/
 
+.nav-item a{
+	float: left;
+	padding: 10px 13px;
+	position: relative;
+	border-bottom: solid 2px #fff;
+}
+.nav-item:hover{
+    background-color: #edf2f3;
+}
+.nav-item a:hover{
+	color:#fd7e14;
+	border-bottom: solid 2px #edf2f3;
+}
+.nav-item .on {
+	color:#fd7e14;
+	border-bottom: solid 2px #fd7e14;
+}
+
+/* 首页幻灯片使用的样式*/
+.mt2 {
+    margin-top: -2rem;
+}
 
 
 
