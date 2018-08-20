@@ -1,0 +1,47 @@
+{php include pubTemplate("header_admin")}
+<!--main-->
+<div class="midder">
+{php include template("admin/menu");}
+
+<form method="POST" action="{SITE_URL}index.php?app=citys&ac=admin&mg=options&ts=edit_do">
+	<table class="table table-hover">
+	<tr>
+		<td width="100">上级城市：</td>
+		<td>{$parent_city[name]}</td>
+	</tr>
+	<tr>
+		<td width="100">城市名称：</td>
+		<td><input name="name" value="{$city['name']}" /></td>
+	</tr>
+	<tr>
+		<td  width="100">排序拼音：</td>
+		<td><input name="spell_order" value="{$city['spell_order']}" /></td>
+	</tr>
+	<tr>
+		<td  width="100">是否启用：</td>
+		<td>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" name="status" value="1" {if $city['status']} checked {/if} >
+				<label class="form-check-label">启用</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" name="status" value="0" {if !$city['status']} checked {/if} >
+				<label class="form-check-label">暂不启用</label>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<input type="hidden" name="id" value="{$city['id']}" />
+			<input type="hidden" name="parent_id" value="{$parent_id}" />
+			<input type="hidden" name="token" value="{$_SESSION['token']}" />
+			<input class="btn btn-primary" type="submit" value="城市" />
+		</td>
+	</tr>
+	</table>
+</form>
+
+</div>
+
+{php include pubTemplate("footer_admin")}

@@ -12,6 +12,7 @@ class tsApp {
 
 
 	public function __construct($dbhandle) {
+	    // var_dump($dbhandle);die;
 		$this->db = $dbhandle;
 	}
 

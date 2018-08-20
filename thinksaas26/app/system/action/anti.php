@@ -6,7 +6,7 @@ switch($ts){
 
 	//垃圾词
 	case "word":
-		
+		// var_dump($new['system']);
 		$arrWord = $new['system']->findAll('anti_word',null,'id desc');
 		
 		include template('anti_word');
