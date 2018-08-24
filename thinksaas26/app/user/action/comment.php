@@ -1,12 +1,14 @@
 <?php 
 defined('IN_TS') or die('Access Denied.');
 
+// 评论
 include 'userinfo.php';
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : '1';
 $url = tsUrl('user','comment',array('id'=>$strUser['userid'],'page'=>''));
 $lstart = $page*20-20;
 
+// 话题回复/评论
 $arrComments = $new['user']->findAll('group_topic_comment',array(
 	'userid'=>$strUser['userid'],
 ),'addtime desc',null,$lstart.',20');

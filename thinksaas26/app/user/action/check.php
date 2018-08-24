@@ -17,9 +17,9 @@ switch($ts){
 		));
 		
 		if($emailNum > 0 || $isAntiEmail >0){
-			echo '{"info":"Email已经存在","status":"n"}';
+			echo '{"info":"Email已经存在", "status":"n"}';
 		}else{
-			echo '{"info":"通过！","status":"y"}';
+			echo '{"info":"通过！", "status":"y"}';
 		}
 		
 		break;

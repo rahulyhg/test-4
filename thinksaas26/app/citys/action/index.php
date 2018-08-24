@@ -7,4 +7,4 @@
  */
 defined('IN_TS') or die('Access Denied.');
 //前台
-echo "hello world!";
+

@@ -2,6 +2,9 @@
 
 $userid = intval($_GET['id']);
 
+// var_dump($userid);die;
+// $userid = 2;
+
 if($new['user']->isUser($userid)==false){
 
 	header("HTTP/1.1 404 Not Found");

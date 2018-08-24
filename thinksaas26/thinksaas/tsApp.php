@@ -166,6 +166,7 @@ class tsApp {
 		if (null != $limit)
 			$sql = $this->db->setlimit ( $sql, $limit );
 		return $this->db->fetch_all_assoc ( $sql );
+		// return $sql;
 	}
 	
 	/**

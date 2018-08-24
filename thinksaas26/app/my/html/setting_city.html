@@ -1,19 +1,5 @@
 {php include pubTemplate("header")}
-<script type="text/javascript" src="{SITE_URL}public/js/city/jquery.cityselect.js"></script>
-<script type="text/javascript">
-var city1 = "{$strUser['province']}";
-if(city1==''){city1 = '北京';}
-var city2 = "{$strUser['city']}";
-if(city2==''){city2 = '朝阳区';}
 
-$(function(){
-	$("#city_3").citySelect({
-    	prov:city1, 
-    	city:city2
-	});
-	
-});
-</script>
 
 <div class="container">
 <div class="row">
@@ -40,24 +26,41 @@ $(function(){
 <div class="row">
   <div class="col-md-3"></div>
   <div class="col-md-6">
-  
-<form role="form" method="POST" action="{tsUrl('my','setting',array('ts'=>'citydo'))}">
 
-  <div class="form-group">
-    <label>修改常居地：</label>
-	
-  	<div id="city_3">
-  		<p><select name="province" class="prov form-control"></select></p> 
-    	<p><select name="city" class="city form-control" disabled="disabled"></select></p>
-        <p><select name="dist" class="dist form-control" disabled="disabled"></select></p>
+    <form role="form" method="POST" action="{tsUrl('my','setting',array('ts'=>'citydo'))}">
+
+      <div class="form-group">
+        <label>修改常居地：</label>
+
+      	<div id="city_3">
+      		<p>
+            <select name="province" id="province" class="prov form-control">
+              <!-- <option value=""></option> -->
+            </select>
+          </p> 
+        	<p>
+            <select name="city" id="city" class="city form-control" ></select>
+          </p>
+          <p>
+            <select name="dist" id="dist" class="dist form-control" ></select>
+          </p>
+        </div>
+    	
+      </div>
+      
+      <button class="btn btn-sm btn-info" type="submit">提交修改</button>
+    </form>
+
+    <div class="mt-4">
+      <p>
+        <a class="btn btn-sm btn-light collapsed" data-toggle="collapse" href="#readme" role="button" aria-expanded="false" aria-controls="collapseExample">说明</a>
+      </p>
+      <div class="collapse" id="readme">
+        <div class="card card-body">
+          <p>'我的城市'是本网站完全自行开发的一个功能，是其它功能的逻辑基础，所以请您认真的如实选择您的城市。当然，城市数据会有不完善的地方，如果恰巧没有您的城市，可以<a href="{tsUrl('user','message',array('ts'=>'add', touserid=>1))}" target="" style="color:#17a2b8" >点击这里</a>报告给管理员，他会很快添加上。花.语再次感谢您的支持。</p>
+        </div>
+      </div>
     </div>
-	
-  </div>
-  
-  <button class="btn btn-sm btn-info" type="submit">提交修改</button>
- 
-</form>
-  
   </div>
   <div class="col-md-3"></div>
 </div>
@@ -67,10 +70,83 @@ $(function(){
 </div>
 </div>
 </div>
-
-
+</div>
 </div>
 
+<script type="text/javascript">
+$(function(){
+  let user_city_id = "{$strUser['cityid']}";
+  const arr_city = {php echo $arrcity};
 
-</div>
+  if (user_city_id) {
+    let self = get_self(user_city_id);
+    let dist_list = get_brother_citys(self['parent_id']);
+    let city = get_self(self['parent_id']);
+    let city_list = get_brother_citys(city['parent_id']);
+    let province = get_self(city['parent_id']);
+    let province_list = get_brother_citys(province['parent_id']);
+    render(dist_list, $('#dist'), user_city_id);
+    render(city_list, $('#city'), city['id']);
+    render(province_list, $('#province'), province['id']);
+
+  } else {
+    let province_list = get_brother_citys(0);
+    let city_list = get_brother_citys(1);
+    render(province_list, $('#province'));
+    render(city_list, $('#city'));
+  }
+
+  //  select点击改变事件
+  let arr_select = $('#city_3 select');
+  arr_select.each(function(index, el) {
+    $(el).on('change', function(e) {
+      e.preventDefault();
+      let self_id = $(this).val();
+      let next_list = get_brother_citys(self_id);
+      $(arr_select[index+1]).empty();
+      $(arr_select[index+2]).empty();
+      render(next_list, $(arr_select[index+1]));
+    });
+  });
+
+
+  function get_self(id) {
+    for (let item of arr_city) {
+      if (item['id']==id) {
+        return item;
+      }
+    }
+  }
+  function get_brother_citys(pid) {
+    let arr = [];
+    for (let item of arr_city) {
+      if (item['parent_id']==pid) {
+        arr.push(item);
+      }
+    }
+    return arr;
+  }
+    /**
+     * [渲染一个"<select>"标签]
+     * @param  {[type]} arr       [储存多个城市信息的数组]
+     * @param  {[type]} container [要渲染的<select>标签]
+     * @param  {[type]} self_id   [selected属性的城市, 默认0是制造无选中的显示]
+     * @return {[type]}           [无返回值，操作目标<select>标签]
+     */
+  function render(arr, container, self_id=0) {
+    container.empty();
+    for (var i=0; i < arr.length; i++) {
+      let html = '';
+      if (arr[i]['id']== self_id) {
+        html = `<option value="${arr[i]['id']}"  selected = "selected">${arr[i]['name']}</option>`;
+      } else {
+        html = `<option value="${arr[i]['id']}">${arr[i]['name']}</option>`;
+      }
+      container.append(html);
+    }
+  }
+
+});
+
+</script>
 {php include pubTemplate("footer")}

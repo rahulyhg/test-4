@@ -77,13 +77,13 @@ switch($ts){
 			
 		//用户session信息
 		$sessionData = array(
-			'userid' => $userData['userid'],
-			'username'	=> $userData['username'],
-			'path'	=> $userData['path'],
-			'face'	=> $userData['face'],
-			'isadmin'	=> $userData['isadmin'],
-			'signin'=>$userData['signin'],
-			'uptime'	=> $userData['uptime'],
+			'userid'   => $userData['userid'],
+			'username' => $userData['username'],
+			'path'     => $userData['path'],
+			'face'     => $userData['face'],
+			'isadmin'  => $userData['isadmin'],
+			'signin'   => $userData['signin'],
+			'uptime'   => $userData['uptime'],
 		);
 
 		$_SESSION['tsuser']	= $sessionData;

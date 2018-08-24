@@ -21,7 +21,6 @@ switch($ts){
 		
 		$js = intval($_GET['js']);
 
-	
 		$email	= trim($_POST['email']);
 
         if(valid_email($email)==false){

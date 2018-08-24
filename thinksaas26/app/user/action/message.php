@@ -17,7 +17,9 @@ switch($ts){
 		$strTouser = $new['user']->getOneUser($touserid);
 
 		if(!$strTouser) tsNotice("Sorry！对方不存在!");
+
 		$title = "发送短消息";
+		
 		include template("message_add");
 		break;
 	

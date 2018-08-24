@@ -266,24 +266,21 @@ switch($ts){
 	case "city":
 		
 		$title = '常居地修改';
+		$arrcity = $db->fetch_all_assoc("select * from ".dbprefix."citys where `status`=1 ORDER BY spell_order ASC");
+		$arrcity = json_encode($arrcity);
+
 		include template("setting_city");
 		break;
 		
 	case "citydo":
-	
-		$province = trim($_POST['province']);
-		$city = trim($_POST['city']);
-        $dist = trim($_POST['dist']);
 		
+		$city_id = intval($_POST['dist']) ? intval($_POST['dist']) : intval($_POST['city']);
+		$city_id = $city_id ? $city_id : intval($_POST['province']);
 
 		$new['my']->update('user_info',array(
 			'userid'=>$userid,
-		),array(
-		
-			'province'=>$province,
-			'city'=>$city,
-            'district'=>$dist,
-		
+		    ),array(
+                'cityid'=>$city_id,
 		));
 
 		tsNotice("常居地更新成功！");
