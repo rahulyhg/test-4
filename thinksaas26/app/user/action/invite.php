@@ -1,7 +1,8 @@
 <?php
 defined('IN_TS') or die('Access Denied.');
 
-//用户是否登录
+// 邀请的操作
+// 用户是否登录
 $userid = aac('user')->isLogin();
 
 $strUser = $new['user']->find('user_info',array(

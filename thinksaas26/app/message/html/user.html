@@ -24,7 +24,7 @@
 <ul>
 {loop $arrMessage $key $item}
 <li {if $item[userid] == $TS_USER[userid]}class="mysend"{/if}>
-{if $item[userid]==$TS_USER[userid]}<span style="color:#006efe;">{$item[user][username]} {php echo date('Y-m-d H:i:s',$item[addtime])}</span>{else}<span style="color:#42b475;">{$item[user][username]} {php echo date('Y-m-d H:i:s',$item[addtime])}</span>{/if}
+{if $item[userid]==$TS_USER[userid]}<span style="color:#F5E9DB;">{$item[user][username]} {php echo date('Y-m-d H:i:s',$item[addtime])}</span>{else}<span style="color:#abdde5;">{$item[user][username]} {php echo date('Y-m-d H:i:s',$item[addtime])}</span>{/if}
 <br />
 {$item[content]}
 </li>
@@ -34,7 +34,7 @@
 
 <div class="sendbox">
 <p>和<span style="color:#0066cc;">{$strTouser[username]}</span>进行及时消息通话中</p>
-<p><textarea class="form-control" id="boxcontent"></textarea> </p>
+<p><textarea class="form-control" id="boxcontent" rows="6"></textarea> </p>
 <p>
 <span id="sendbutton" style="display:block;"><a class="btn btn-success" href="javascript:void('0');" onclick="window.parent.sendmsg('{$TS_USER[userid]}','{$strTouser[userid]}');">发送</a></span>
 <span id="loading" style="display:none;">消息送达中<img src="{SITE_URL}app/{$app}/skins/{$skin}/loading.gif" alt="Loading..." /></span>

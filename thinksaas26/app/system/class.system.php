@@ -69,6 +69,7 @@ class system extends tsApp{
 			}
 			
 			//第四过滤层，过滤QQ号，电话，妈的，老子就不信搞不死你
+            //这里的强行返回非法操作，体验不友好，可以将被过滤的词汇直接替换成"被禁止的词汇"
 			$text4 = @preg_replace("/[^\d]/iu",'',$text);
 			preg_match("/$strWord/i",t($text4), $matche4);
 			if(!empty($matche4[0])){
