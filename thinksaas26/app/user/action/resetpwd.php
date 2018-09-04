@@ -34,12 +34,10 @@ switch($ts){
 
 	case "do":
 	
-		$js = intval($_GET['js']);
-	
-		$email 	= trim($_POST['email']);
-		$pwd 	= trim($_POST['pwd']);
-		$repwd	= trim($_POST['repwd']);
-		
+		$js       = intval($_GET['js']);
+		$email    = trim($_POST['email']);
+		$pwd      = trim($_POST['pwd']);
+		$repwd    = trim($_POST['repwd']);
 		$resetpwd = trim($_POST['resetpwd']);
 
 
@@ -49,7 +47,7 @@ switch($ts){
 		}
 
         if(valid_email($email)==false){
-            getJson('Email输入不正确',$js);
+            getJson('录入的Email格式不正确',$js);
         }
 
         $userNum = $new['user']->findCount('user',array(

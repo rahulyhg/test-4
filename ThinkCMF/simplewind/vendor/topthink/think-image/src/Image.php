@@ -95,6 +95,7 @@ class Image
      */
     public static function open($file)
     {
+        // print_r($file);die;
         if (is_string($file)) {
             $file = new \SplFileInfo($file);
         }
@@ -290,16 +291,20 @@ class Image
         //原图宽度和高度
         $w = $this->info['width'];
         $h = $this->info['height'];
+        //print_r($type);
         /* 计算缩略图生成的必要参数 */
         switch ($type) {
             /* 等比例缩放 */
             case self::THUMB_SCALING:
+
                 //原图尺寸小于缩略图尺寸则不进行缩略
                 if ($w < $width && $h < $height) {
+                    // print_r($type);
                     return $this;
                 }
                 //计算缩放比例
                 $scale = min($width / $w, $height / $h);
+
                 //设置缩略图的坐标及宽度和高度
                 $x      = $y      = 0;
                 $width  = $w * $scale;

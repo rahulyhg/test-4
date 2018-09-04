@@ -21,6 +21,7 @@ class IndexController extends HomeBaseController
      */
     public function index()
     {
+        // http://test/user/index 这里必须加一个路由 直接接收ID和用户名
         $id        = $this->request->param("id", 0, "intval");
         $userModel = new UserModel();
         $user      = $userModel->where('id', $id)->find();
@@ -52,5 +53,7 @@ class IndexController extends HomeBaseController
         session("user", null);//只有前台用户退出
         return redirect($this->request->root() . "/");
     }
+
+    
 
 }

@@ -62,10 +62,10 @@ switch($ts){
 		}
 		
 		$commentid = $new['photo']->create('photo_comment',array(
-			'photoid'			=> $photoid,
-			'userid'			=> $userid,
-			'content'	=> $content,
-			'addtime'		=> time(),
+			'photoid' => $photoid,
+			'userid'  => $userid,
+			'content' => $content,
+			'addtime' => time(),
 		));
 		
 		header("Location: ".tsUrl('photo','show',array('id'=>$photoid)));

@@ -32,11 +32,12 @@ class ProfileController extends UserBaseController
     {
         $user = cmf_get_current_user();
         $this->assign($user);
-
+        // var_dump($user);
         $userId = cmf_get_current_user_id();
 
         $userModel = new UserModel();
         $user      = $userModel->where('id', $userId)->find();
+        // var_dump($user);
         $this->assign('user', $user);
         return $this->fetch();
     }
@@ -225,6 +226,7 @@ class ProfileController extends UserBaseController
     public function binding()
     {
         $user = cmf_get_current_user();
+        // var_dump($user);
         $this->assign($user);
         return $this->fetch();
     }

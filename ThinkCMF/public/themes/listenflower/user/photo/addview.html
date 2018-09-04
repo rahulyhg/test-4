@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>发照片 | {$site_info.site_name}</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content="">
+    <include file="public@head"/>
+    <style type="text/css">
+
+				:-webkit-full-screen {
+				    /* width: 100%; */
+				    /* background: none; */
+				}
+				#show_area img {
+					width: 100%;
+				}
+        #exif, #upimg {
+        	margin: 0.5rem 0 2rem;
+        }
+
+
+    </style>
+</head>
+<body class="body-white" id="top">
+<include file="public@nav2"/>
+
+<div class="container tc-main">
+    <div class="row">
+    		<h3 class="text-center">上传照片作品</h3>
+    		<form class=" js-ajax-form" action="{:url('user/Photo/photoUpload')}" method="post">
+	        <div class="col-md-6">
+            <br>
+            <div id="show_area">
+            	<!-- <span id="helpBlock2" class="text-primary">照片正在本地渲染中，请稍后...</span> -->
+            </div>
+            <div id="exif"></div>
+            <input type="file" id="upimg" name="photo"/>
+            <input type="text" id="exifdata" name="exifdata" class="hide">
+	        </div>
+	        <div class="col-md-6">
+	        	<br>
+	        	<div class="form-group">
+	        		<label for="" class=" control-label"><i class="fa fa-paw text-danger"></i> 标题</label>
+<span class="text-warning small">（亲，带有<i class="fa fa-paw text-danger"></i>标志的是必填项目，请不要忘记填写呦。）</span>
+        			<input type="text" class="form-control" id="" placeholder="简短的标题" name="title">
+	        	</div>
+	        	<div class="form-group">
+	        		<label for="" class="control-label" name="readme">作品心得</label>
+	        		<textarea class="form-control" rows="5"></textarea>
+	        	</div>
+	        	<div class="form-group">
+	        		<label for="" class="control-label" name="sheying"><i class="fa fa-paw text-danger"></i> 摄影师</label>
+	        		<select class="form-control">
+	        		  <option>我本人</option>
+	        		  <option>2</option>
+	        		  <option>3</option>
+	        		  <option>4</option>
+	        		  <option>5</option>
+	        		</select>
+	        	</div>
+	        	<div class="form-group">
+	        		<label for="" class="control-label" name="madou"><i class="fa fa-paw text-danger"></i> 麻豆</label>
+	        		<select class="form-control">
+	        		  <option>我本人</option>
+	        		  <option>2</option>
+	        		  <option>3</option>
+	        		  <option>4</option>
+	        		  <option>5</option>
+	        		</select>
+	        	</div>
+	        	<div class="form-group">
+	        		<label for="" class="control-label" name="huazhuang">化妆师</label>
+		        	<select class="form-control">
+		        		  <option>我本人</option>
+		        		  <option>2</option>
+		        		  <option>3</option>
+		        		  <option>4</option>
+		        		  <option>5</option>
+		        	</select>
+	        	</div>
+	        	<div class="form-group">
+	        		<label for="" class="control-label" name="houqi">后期制作</label>
+		        		<select class="form-control">
+		        		  <option>我本人</option>
+		        		  <option>2</option>
+		        		  <option>3</option>
+		        		  <option>4</option>
+		        		  <option>5</option>
+		        		</select>
+	        	</div>
+	        	<div class="form-group">
+	        		<label for="" class="control-label" name="copyright"><i class="fa fa-paw text-danger"></i> 版权声明</label>
+	        		<select class="form-control">
+	        		  <option>1</option>
+	        		  <option>2</option>
+	        		  <option>3</option>
+	        		  <option>4</option>
+	        		  <option>5</option>
+	        		</select>
+	        	</div>
+
+	        	<div class="form-group">
+	        		<label for="" class="control-label"></label>
+			        <button type="submit" class="btn btn-primary js-ajax-submit">确认提交</button>
+	        	</div>
+	        </div>
+
+        </form>
+
+    </div>
+    <div class="">
+			<div class="readme">
+            <p class="help-block">支持jpg,png,jpeg格式</p>
+            <p class="help-block">网站将每一张照片定义为一个作品，以进行评分、收藏等操作。多个作品发表完之后作者可以对作品分组、制作作品集等操作。</p>
+            <p class="help-block">或许您觉得这种逐张照片发表的做法有些繁琐，但我们这要做有一些目的，一是发表您精选的作品也是对阅读者的时间和视觉的一种尊重，所以我们希望您斟酌；二是每发表一张照片我们没有基础积分，所有的积分都是由读者给予的，发表更多的照片当然可能获得更多的读者赠分，也可能适得其反。</p>
+            <p class="help-block">效率、互相尊重、倾听是我们长久发展的基础。</p>
+    	</div>    	
+    </div>
+
+    <include file="public@footer"/>
+		<script src="__STATIC__/js/exif.js"></script>
+</div>
+<!-- /container -->
+
+<include file="public@scripts"/>
+<script type="text/javascript">
+	let upimg = document.querySelector('#upimg');
+
+	upimg.addEventListener('change', function(e){
+		document.querySelector('#show_area').innerHTML = `<span class="text-primary">照片正在渲染，请稍后...</span>`;
+		let files = this.files;
+		if(files.length){
+			checkFile(this.files);
+		}
+	});
+
+	function checkFile(files){
+		let file = files[0];
+		let show = document.querySelector('#show_area');
+		let reader = new FileReader();
+
+
+		if(!/image\/\w+/.test(file.type)){
+			show.innerHTML = `<p class="text-danger">请确保文件为图像类型</p>`;
+			return false;
+		}
+		if (file.size > 16384*1024) {
+			show.innerHTML = `<p class="text-danger">您上传的照片的大小为${file.size}kb，超过了服务器16M的限制。</p>`;
+			return false;
+		}
+		
+		reader.onload = function(e){
+			show.innerHTML = '<img src="'+e.target.result+'" alt="img" id="img">';
+			// document.querySelector("#show_area img").style.width = '100%';
+			getExif(e.target.result);
+		}
+		reader.readAsDataURL(file);
+	}
+
+	function getExif(src) {
+		let img = new Image();
+		img.onload = function() {
+
+			EXIF.getData(img, function(){
+				let exif = EXIF.getAllTags(this);
+				let exif_str = EXIF.pretty(this);
+				let exif_raw = EXIF.getData(this);
+				// console.log(exif_raw);
+				// console.log(exif_str);
+				renderExif(exif);
+			})
+		}
+		img.src = src;
+	}
+
+	function renderExif(exif) {
+		// console.log(exif);
+		exif_area = $('#exif');
+		exif_area.empty(exif);
+
+		if (exif.hasOwnProperty('ExposureTime')) {
+			let newData = {
+				'相机'  : exif.Model,
+				'镜头'  : exif.undefined,
+				'曝光时间': `${exif.ExposureTime.denominator}/${exif.ExposureTime.numerator}S`,
+				'拍摄焦距' : `${exif.FocalLength} mm`,
+				'光圈' : `F`+ exif.FNumber,
+				'35mm等效焦距': `${exif.FocalLengthIn35mmFilm} mm`,
+				'ISO' : exif.ISOSpeedRatings,
+				'分辨率' : `${exif.ImageWidth} * ${exif.ImageHeight}`,
+				'拍摄时间': exif.DateTimeOriginal,
+				'拍摄者' : exif.Artist,
+				'后期处理': exif.Software,
+			}
+
+			$('#exifdata').val(JSON.stringify(newData));
+			
+			for (let k in newData) {
+				exif_area.append(`${k} : ${newData[k]};<br>`);
+			}
+		} else {
+			exif_area.append(`<p class="text-danger">对不起，此照片没有EXIF信息</p>`);
+		}
+
+		full_screen();
+	}
+
+	function full_screen() {
+		let lib = `https://github.com/sindresorhus/screenfull.js/`;
+		if (typeof window.screenX != "number") {
+			alert('亲，请您使用Chrome、Opera、firfox等现代浏览器');
+			return false;
+		}
+
+		let show = document.querySelector("#show_area");
+		let img = document.querySelector("#show_area img");
+
+
+		show.addEventListener('click', function(){
+
+			if (!document.webkitIsFullScreen) {
+				if (img.width > img.height) {
+					img.style.width = `${screen.width}px`;
+				} else {
+					img.style.height = `${screen.height}px`;
+					img.style.width =  `auto`;
+				}
+				
+				this.webkitRequestFullScreen();
+
+			} else {
+				document.webkitCancelFullScreen();
+				img.style.width = '100%';
+				img.style.height = 'auto';
+			}
+		});
+	}
+
+</script>
+
+</body>
+</html>

@@ -4,9 +4,10 @@ defined('IN_TS') or die('Access Denied.');
 //程序主体
 switch($ts){
 	case "":
-		// if(intval($TS_USER['userid']) > 0) {
-  //           header('Location: '.SITE_URL);exit;
-  //   }
+		if(intval($TS_USER['userid']) > 0) {
+			header('Location: '.SITE_URL);
+			exit;
+		}
 		
 		//记录上次访问地址
 		$jump = $_SERVER['HTTP_REFERER'];
@@ -21,19 +22,19 @@ switch($ts){
 		//用于JS提交验证
 		$js = intval($_GET['js']);
 
-        $ad = intval($_POST['ad']);
+		$ad = intval($_POST['ad']);//var_dump($_POST, $_GET);die;
 		
 		/*禁止以下IP用户登陆或注册*/
 		$arrIp = aac('system')->antiIp();
 		if(in_array(getIp(),$arrIp)){
-			getJson('你的IP已被锁定，暂无法登录！',$js);
+			getJson('你的IP已被锁定，暂无法登录！', $js);
 		}
 		
-		$jump = trim($_POST['jump']);
+		$jump   = trim($_POST['jump']);
 		
-		$email = trim($_POST['email']);
+		$email  = trim($_POST['email']);
 		
-		$pwd = trim($_POST['pwd']);
+		$pwd    = trim($_POST['pwd']);
 		
 		$cktime = $_POST['cktime'];
 		

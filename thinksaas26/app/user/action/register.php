@@ -5,8 +5,8 @@ defined('IN_TS') or die('Access Denied.');
 switch($ts){
 	case "":
 		if(intval($TS_USER['userid']) > 0) {
-            header('Location: '.SITE_URL);exit;
-        }
+			header('Location: '.SITE_URL);exit;
+		}
 		
 		//邀请用户ID
 		$fuserid = intval($_GET['fuserid']);
@@ -20,22 +20,22 @@ switch($ts){
 
 		//用于JS提交验证
 		$js = intval($_GET['js']);
-	
+		
 		$email		= trim($_POST['email']);
 		$pwd			= trim($_POST['pwd']);
 		$repwd		= trim($_POST['repwd']);
-		$username		= t($_POST['username']);
+		$username	= t($_POST['username']);
 		
 		$fuserid = intval($_POST['fuserid']);
 		
 		$authcode = strtolower($_POST['authcode']);
 
 
-        //检测垃圾Email后缀
-        $arrEmail = explode('@',$email);
-        if($arrEmail[1]=='chacuo.net' || $arrEmail[1]=='mail.ru' || $arrEmail[1]=='yandex.ru' || $arrEmail[1]=='yandex.com' || $arrEmail[1]=='027168.net' || $arrEmail[1]=='027168.com'){
-            getJson('Fuck you every day！',$js);
-        }
+		//检测垃圾Email后缀
+		$arrEmail = explode('@',$email);
+		if($arrEmail[1]=='chacuo.net' || $arrEmail[1]=='mail.ru' || $arrEmail[1]=='yandex.ru' || $arrEmail[1]=='yandex.com' || $arrEmail[1]=='027168.net' || $arrEmail[1]=='027168.com'){
+				getJson('Fuck you every day！',$js);
+		}
 		
 		
 		/*禁止以下IP用户登陆或注册*/
@@ -115,12 +115,12 @@ switch($ts){
 		
 		//插入用户信息			
 		$new['user']->create('user_info',array(
-			'userid'			=> $userid,
+			'userid'	=> $userid,
 			'fuserid'	=> $fuserid,
-			'username' 	=> $username,
+			'username'=> $username,
 			'email'		=> $email,
 			'ip'			=> getIp(),
-            'comefrom'=>'9',
+			'comefrom'=>'9',
 			'addtime'	=> time(),
 			'uptime'	=> time(),
 		));

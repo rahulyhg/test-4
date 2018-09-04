@@ -50,12 +50,6 @@ switch($ts){
 
         }
 
-
-
-
-
-
-
         break;
 
 }
