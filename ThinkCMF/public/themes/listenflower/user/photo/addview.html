@@ -28,29 +28,31 @@
     <div class="row">
     		<h3 class="text-center">上传照片作品</h3>
     		<form class=" js-ajax-form" action="{:url('user/Photo/photoUpload')}" method="post">
+
 	        <div class="col-md-6">
             <br>
             <div id="show_area">
             	<!-- <span id="helpBlock2" class="text-primary">照片正在本地渲染中，请稍后...</span> -->
             </div>
             <div id="exif"></div>
+
             <input type="file" id="upimg" name="photo"/>
             <input type="text" id="exifdata" name="exifdata" class="hide">
 	        </div>
+
 	        <div class="col-md-6">
 	        	<br>
 	        	<div class="form-group">
-	        		<label for="" class=" control-label"><i class="fa fa-paw text-danger"></i> 标题</label>
-<span class="text-warning small">（亲，带有<i class="fa fa-paw text-danger"></i>标志的是必填项目，请不要忘记填写呦。）</span>
+							<label for="" class=" control-label"><i class="fa fa-paw text-danger"></i> 标题</label><span class="text-warning small">（亲，带有<i class="fa fa-paw text-danger"></i>标志的是必填项目，请不要忘记填写呦。）</span>
         			<input type="text" class="form-control" id="" placeholder="简短的标题" name="title">
 	        	</div>
 	        	<div class="form-group">
-	        		<label for="" class="control-label" name="readme">作品心得</label>
-	        		<textarea class="form-control" rows="5"></textarea>
+	        		<label for="" class="control-label">作品心得</label>
+	        		<textarea class="form-control" rows="5" name="desc"></textarea>
 	        	</div>
 	        	<div class="form-group">
-	        		<label for="" class="control-label" name="sheying"><i class="fa fa-paw text-danger"></i> 摄影师</label>
-	        		<select class="form-control">
+	        		<label for="" class="control-label"><i class="fa fa-paw text-danger"></i> 摄影师</label>
+	        		<select class="form-control" name="sheying">
 	        		  <option>我本人</option>
 	        		  <option>2</option>
 	        		  <option>3</option>
@@ -59,9 +61,9 @@
 	        		</select>
 	        	</div>
 	        	<div class="form-group">
-	        		<label for="" class="control-label" name="madou"><i class="fa fa-paw text-danger"></i> 麻豆</label>
-	        		<select class="form-control">
-	        		  <option>我本人</option>
+	        		<label for="" class="control-label"><i class="fa fa-paw text-danger"></i> 麻豆</label>
+	        		<select class="form-control" name="madou">
+	        		  <option value="0">匿名</option>
 	        		  <option>2</option>
 	        		  <option>3</option>
 	        		  <option>4</option>
@@ -69,9 +71,9 @@
 	        		</select>
 	        	</div>
 	        	<div class="form-group">
-	        		<label for="" class="control-label" name="huazhuang">化妆师</label>
-		        	<select class="form-control">
-		        		  <option>我本人</option>
+	        		<label for="" class="control-label">化妆师</label>
+		        	<select class="form-control" name="huazhuang">
+		        		  <option value="0">匿名</option>
 		        		  <option>2</option>
 		        		  <option>3</option>
 		        		  <option>4</option>
@@ -79,25 +81,29 @@
 		        	</select>
 	        	</div>
 	        	<div class="form-group">
-	        		<label for="" class="control-label" name="houqi">后期制作</label>
-		        		<select class="form-control">
-		        		  <option>我本人</option>
+	        		<label for="" class="control-label">后期制作</label>
+		        		<select class="form-control" name="houqi">
+		        		  <option value="0">匿名</option>
 		        		  <option>2</option>
 		        		  <option>3</option>
 		        		  <option>4</option>
 		        		  <option>5</option>
 		        		</select>
 	        	</div>
+
+	        	<!-- 版权声明 -->
 	        	<div class="form-group">
-	        		<label for="" class="control-label" name="copyright"><i class="fa fa-paw text-danger"></i> 版权声明</label>
-	        		<select class="form-control">
-	        		  <option>1</option>
-	        		  <option>2</option>
-	        		  <option>3</option>
-	        		  <option>4</option>
-	        		  <option>5</option>
-	        		</select>
+	        		<label for="" class="control-label"><i class="fa fa-paw text-danger"></i> 版权声明(可多选)</label>
+	        		<foreach name='copyrights' item="vo">
+		        		<div class="checkbox">
+		        		  <label>
+		        		    <input type="checkbox" name="copyright[]" value="{$vo['id']}">
+		        		    {$vo['content']}
+		        		  </label>
+		        		</div>
+	        		</foreach>
 	        	</div>
+	        	<!-- 版权声明结束 -->
 
 	        	<div class="form-group">
 	        		<label for="" class="control-label"></label>
@@ -111,6 +117,7 @@
     <div class="">
 			<div class="readme">
             <p class="help-block">支持jpg,png,jpeg格式</p>
+            <p class="help-block">此处任一边长超过2000像素的照片会在后台服务器进行无损、等比缩放。如果您对服务器处理图片的质量有所怀疑，可以通过控制分辨率的方式来避免触发此程序的执行。</p>
             <p class="help-block">网站将每一张照片定义为一个作品，以进行评分、收藏等操作。多个作品发表完之后作者可以对作品分组、制作作品集等操作。</p>
             <p class="help-block">或许您觉得这种逐张照片发表的做法有些繁琐，但我们这要做有一些目的，一是发表您精选的作品也是对阅读者的时间和视觉的一种尊重，所以我们希望您斟酌；二是每发表一张照片我们没有基础积分，所有的积分都是由读者给予的，发表更多的照片当然可能获得更多的读者赠分，也可能适得其反。</p>
             <p class="help-block">效率、互相尊重、倾听是我们长久发展的基础。</p>
